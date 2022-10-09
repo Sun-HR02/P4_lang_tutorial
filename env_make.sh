@@ -32,32 +32,14 @@ GRPC_COMMIT="v1.3.2"
 NUM_CORES=`grep -c ^processor /proc/cpuinfo`
  
 cd $P4_HOME
-# 安装Mininet
-git clone git://github.com/mininet/mininet mininet
-cd mininet
-sudo ./util/install.sh -nwv
-cd ..
- 
+
+# 安装 mininet
+sudo apt install mininet -y
+
 # 安装Protobuf
-git clone https://github.com/google/protobuf.git
-cd protobuf
-git checkout ${PROTOBUF_COMMIT}
-export CFLAGS="-Os"
-export CXXFLAGS="-Os"
-export LDFLAGS="-Wl,-s"
-./autogen.sh
-./configure --prefix=/usr
-make -j${NUM_CORES}
-sudo make install
-sudo ldconfig
-unset CFLAGS CXXFLAGS LDFLAGS
-# force install python module
-cd python
-sudo python setup.py install
-cd ../..
- 
+sudo apt-get install libprotobuf-dev protobuf-compiler -y
 # 安装gRPC
-git clone https://github.com/grpc/grpc.git
+git clone https://gitee.com/xigongxiaoche/grpc.git
 cd grpc
 git checkout ${GRPC_COMMIT}
 git submodule update --init --recursive
